@@ -41,7 +41,7 @@ export const Footer: React.FC<FooterProps> = ({
               <VanavriddhiLogo className="w-9 h-9 shrink-0" />
               <div>
                 <h4 className="font-bold text-base text-white tracking-tight">
-                  VANAVRIDDHI (वनवृद्धि)
+                  A.S.T.R.A
                 </h4>
                 <p className="text-[11px] text-stone-400">
                   Scholarship &amp; Fellowship Management for Scheduled Tribes
@@ -139,7 +139,7 @@ export const Footer: React.FC<FooterProps> = ({
         {/* Bottom Bar */}
         <div className="mt-8 pt-6 border-t border-stone-800 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] text-stone-400">
           <div>
-            © 2026 Vanavriddhi. Scholarship &amp; Fellowship Management for Scheduled Tribes
+            © 2026 A.S.T.R.A. Scholarship &amp; Fellowship Management for Scheduled Tribes
           </div>
           <div className="flex items-center gap-4">
             <span className="flex items-center gap-1 text-emerald-400 font-medium">

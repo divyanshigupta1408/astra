@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { AuthUser, AppLanguage, StudentProfile } from '../../types';
+import React, { useState, useEffect } from 'react';
+import { AuthUser, AppLanguage, StudentProfile, StudentDraftState, UserRole } from '../../types';
 import { StudentLayout, StudentNavTab } from './StudentLayout';
 import { StudentHomeTab } from './StudentHomeTab';
 import { EligibilityChecker } from './EligibilityChecker';
@@ -10,6 +10,8 @@ import { StudentRenewalTab } from './StudentRenewalTab';
 import { StudentGrievanceTab } from './StudentGrievanceTab';
 import { AccessControlPanel } from '../AccessControlPanel';
 import { AiAssistantWidget } from '../AiAssistantWidget';
+import { CommandPaletteModal } from '../CommandPaletteModal';
+import { OnboardingTour } from '../OnboardingTour';
 
 interface StudentDashboardProps {
   user: AuthUser;
@@ -32,6 +34,30 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
   const [createdApplicationId, setCreatedApplicationId] = useState<string>(
     user.studentApplicationId || 'VV-2026-CG-088219'
   );
+
+  // In-Memory Save & Resume State
+  const [applicationDraft, setApplicationDraft] = useState<StudentDraftState>({
+    currentStep: 2,
+    totalSteps: 4,
+    stepName: 'Document Upload & Cross-Reconciliation',
+    completionPercentage: 65,
+    lastSavedAt: 'Just now',
+    schemeId: selectedSchemeId || 'TOP-CLASS-ST'
+  });
+
+  const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState<boolean>(false);
+  const [isTourOpen, setIsTourOpen] = useState<boolean>(false);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        setIsCommandPaletteOpen(prev => !prev);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   // Student's isolated profile
   const isMeena = user.identifier === '9876543210' || user.id === 'USR-STU-MEENA';
@@ -94,84 +120,109 @@ export const StudentDashboard: React.FC<StudentDashboardProps> = ({
   };
 
   return (
-    <StudentLayout
-      user={user}
-      activeTab={activeTab}
-      onTabChange={setActiveTab}
-      language={language}
-      onLanguageChange={onLanguageChange}
-      onLogout={onLogout}
-    >
-      <div className="space-y-6">
-        {/* Your Access Scope Panel */}
-        <AccessControlPanel user={user} />
+    <>
+      <StudentLayout
+        user={user}
+        activeTab={activeTab}
+        onTabChange={setActiveTab}
+        language={language}
+        onLanguageChange={onLanguageChange}
+        onLogout={onLogout}
+        onOpenCommandPalette={() => setIsCommandPaletteOpen(true)}
+        onReplayTour={() => setIsTourOpen(true)}
+      >
+        <div className="space-y-6">
+          {/* Your Access Scope Panel */}
+          <AccessControlPanel user={user} />
 
-        {/* Tab 1: Home */}
-        {activeTab === 'home' && (
-          <StudentHomeTab
-            user={user}
-            language={language}
-            onNavigateTab={setActiveTab}
-          />
-        )}
+          {/* Tab 1: Home */}
+          {activeTab === 'home' && (
+            <StudentHomeTab
+              user={user}
+              language={language}
+              onNavigateTab={setActiveTab}
+              applicationDraft={applicationDraft}
+            />
+          )}
 
-        {/* Tab 2: Check Eligibility */}
-        {activeTab === 'eligibility' && (
-          <EligibilityChecker
-            language={language}
-            onProceedToApply={(sId) => handleProceedToApply(sId)}
-            initialProfile={initialProfile}
-          />
-        )}
+          {/* Tab 2: Check Eligibility */}
+          {activeTab === 'eligibility' && (
+            <EligibilityChecker
+              language={language}
+              onProceedToApply={(sId) => handleProceedToApply(sId)}
+              initialProfile={initialProfile}
+            />
+          )}
 
-        {/* Tab 3: My Application */}
-        {activeTab === 'apply' && (
-          <SmartApplication
-            language={language}
-            selectedSchemeId={selectedSchemeId}
-            initialProfile={initialProfile}
-            onSubmitSuccess={handleApplicationSubmitted}
-          />
-        )}
+          {/* Tab 3: My Application */}
+          {activeTab === 'apply' && (
+            <SmartApplication
+              language={language}
+              selectedSchemeId={selectedSchemeId}
+              initialProfile={initialProfile}
+              onSubmitSuccess={handleApplicationSubmitted}
+              onDraftUpdate={setApplicationDraft}
+            />
+          )}
 
-        {/* Tab 4: Documents */}
-        {activeTab === 'documents' && (
-          <StudentDocumentsTab
-            user={user}
-            language={language}
-          />
-        )}
+          {/* Tab 4: Documents */}
+          {activeTab === 'documents' && (
+            <StudentDocumentsTab
+              user={user}
+              language={language}
+            />
+          )}
 
-        {/* Tab 5: Track Status */}
-        {activeTab === 'track' && (
-          <ApplicationTracker
-            language={language}
-            applicationId={createdApplicationId}
-            isGramSabhaFallback={isGramSabhaFallback}
-          />
-        )}
+          {/* Tab 5: Track Status */}
+          {activeTab === 'track' && (
+            <ApplicationTracker
+              language={language}
+              applicationId={createdApplicationId}
+              isGramSabhaFallback={isGramSabhaFallback}
+            />
+          )}
 
-        {/* Tab 6: Renewal */}
-        {activeTab === 'renewal' && (
-          <StudentRenewalTab
-            user={user}
-            language={language}
-            onLogAction={onLogAction}
-          />
-        )}
+          {/* Tab 6: Renewal */}
+          {activeTab === 'renewal' && (
+            <StudentRenewalTab
+              user={user}
+              language={language}
+              onLogAction={onLogAction}
+            />
+          )}
 
-        {/* Tab 7: Help & Grievance */}
-        {activeTab === 'grievance' && (
-          <StudentGrievanceTab
-            user={user}
-            language={language}
-            onLogAction={onLogAction}
-          />
-        )}
-      </div>
+          {/* Tab 7: Help & Grievance */}
+          {activeTab === 'grievance' && (
+            <StudentGrievanceTab
+              user={user}
+              language={language}
+              onLogAction={onLogAction}
+            />
+          )}
+        </div>
 
-      {/* Embedded Assistant */}
-      <AiAssistantWidget language={language} />
-    </StudentLayout>
+        {/* Embedded Assistant */}
+        <AiAssistantWidget language={language} />
+      </StudentLayout>
+
+      {/* Global Command Palette (Ctrl+K) */}
+      <CommandPaletteModal
+        isOpen={isCommandPaletteOpen}
+        onClose={() => setIsCommandPaletteOpen(false)}
+        user={user}
+        language={language}
+        onNavigateTab={(tab) => {
+          setActiveTab(tab as StudentNavTab);
+          setIsCommandPaletteOpen(false);
+        }}
+      />
+
+      {/* Onboarding Tour */}
+      <OnboardingTour
+        isOpen={isTourOpen}
+        onClose={() => setIsTourOpen(false)}
+        onSelectRole={() => setIsTourOpen(false)}
+      />
+    </>
   );
 };

@@ -14,7 +14,7 @@ export const VanavriddhiLogo: React.FC<{ className?: string; size?: number }> = 
       fill="none" 
       xmlns="http://www.w3.org/2000/svg" 
       className={className}
-      aria-label="Vanavriddhi Portal Logo"
+      aria-label="A.S.T.R.A Portal Logo"
       role="img"
     >
       <defs>

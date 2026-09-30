@@ -20,7 +20,7 @@ export class ErrorBoundary extends Component<Props, State> {
   }
 
   public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.error('Vanavriddhi Portal Error Boundary:', error, errorInfo);
+    console.error('A.S.T.R.A Portal Error Boundary:', error, errorInfo);
   }
 
   public render() {

@@ -14,14 +14,17 @@ import { LegalAndInfoModal, InfoModalType } from './components/LegalAndInfoModal
 import { NotFoundPage } from './components/NotFoundPage';
 import { ToastProvider } from './components/Toast';
 import { ErrorBoundary } from './components/ErrorBoundary';
+import { AccessibilityProvider } from './components/AccessibilityContext';
 import { generateAuditHash } from './data/auditLog';
 
 export default function App() {
   return (
     <ErrorBoundary>
-      <ToastProvider>
-        <AppContent />
-      </ToastProvider>
+      <AccessibilityProvider>
+        <ToastProvider>
+          <AppContent />
+        </ToastProvider>
+      </AccessibilityProvider>
     </ErrorBoundary>
   );
 }

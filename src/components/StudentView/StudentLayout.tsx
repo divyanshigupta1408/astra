@@ -32,6 +32,8 @@ interface StudentLayoutProps {
   language: AppLanguage;
   onLanguageChange: (lang: AppLanguage) => void;
   onLogout: () => void;
+  onOpenCommandPalette?: () => void;
+  onReplayTour?: () => void;
   children: React.ReactNode;
 }
 
@@ -42,6 +44,8 @@ export const StudentLayout: React.FC<StudentLayoutProps> = ({
   language,
   onLanguageChange,
   onLogout,
+  onOpenCommandPalette,
+  onReplayTour,
   children
 }) => {
   const navItems: { id: StudentNavTab; labelHi: string; labelEn: string; icon: React.ElementType }[] = [
@@ -70,7 +74,7 @@ export const StudentLayout: React.FC<StudentLayoutProps> = ({
             <div>
               <div className="flex items-center gap-2">
                 <span className="text-sm font-bold text-stone-900 tracking-tight">
-                  VANAVRIDDHI (वनवृद्धि)
+                  A.S.T.R.A
                 </span>
                 <span className="text-[10px] font-bold bg-amber-100 text-amber-900 px-2 py-0.5 rounded border border-amber-300">
                   {language === 'hi' ? 'छात्र पोर्टल' : 'Student Portal'}
@@ -116,6 +120,8 @@ export const StudentLayout: React.FC<StudentLayoutProps> = ({
         onLogout={onLogout}
         onNavigateHome={() => onTabChange('home')}
         accentColor="amber"
+        onOpenCommandPalette={onOpenCommandPalette}
+        onReplayTour={onReplayTour}
       />
 
       {/* Main Body with Desktop Sidebar + Content */}

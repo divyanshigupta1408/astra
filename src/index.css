@@ -1,1 +1,19 @@
 @import "tailwindcss";
+
+/* High Contrast Mode */
+body.app-high-contrast {
+  filter: contrast(115%);
+}
+
+body.app-high-contrast button,
+body.app-high-contrast input,
+body.app-high-contrast select,
+body.app-high-contrast [role="button"] {
+  outline-color: #000 !important;
+  border-width: 1.5px !important;
+}
+
+body.app-high-contrast .border-stone-200,
+body.app-high-contrast .border-stone-100 {
+  border-color: #78716c !important;
+}

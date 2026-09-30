@@ -206,7 +206,7 @@ export const MinistryLogin: React.FC<MinistryLoginProps> = ({
       </main>
 
       <footer className="text-center py-4 text-xs text-stone-500 border-t border-stone-200 bg-white">
-        © 2026 Vanavriddhi. Ministry Analytics &amp; Strategic Oversight Division
+        © 2026 A.S.T.R.A. Ministry Analytics &amp; Strategic Oversight Division
       </footer>
     </div>
   );

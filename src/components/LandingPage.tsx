@@ -56,8 +56,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({
   const faqs = [
     {
       q: language === 'hi' 
-        ? 'क्या कोई भी अनुसूचित जनजाति (ST) विद्यार्थी वनवृद्धि पोर्टल पर आवेदन कर सकता है?' 
-        : 'Who is eligible to apply for scholarships on Vanavriddhi?',
+        ? 'क्या कोई भी अनुसूचित जनजाति (ST) विद्यार्थी A.S.T.R.A पोर्टल पर आवेदन कर सकता है?' 
+        : 'Who is eligible to apply for scholarships on A.S.T.R.A?',
       a: language === 'hi'
         ? 'हां, भारत के किसी भी राज्य या केंद्र शासित प्रदेश में अधिसूचित अनुसूचित जनजाति समुदाय के विद्यार्थी, जो मान्यता प्राप्त विद्यालयों, विश्वविद्यालयों अथवा राष्ट्रीय महत्व के संस्थानों में अध्ययनरत हैं, पात्रता नियमों (जैसे पारिवारिक आय सीमा) के अनुरूप आवेदन कर सकते हैं।'
         : 'All students belonging to Scheduled Tribes recognized under Article 342 of the Constitution, enrolled in recognized schools, colleges, universities, or Institutes of National Importance (IITs, NITs, AIIMS), subject to scheme-specific criteria such as family annual income ceilings.'
@@ -67,8 +67,8 @@ export const LandingPage: React.FC<LandingPageProps> = ({
         ? 'यदि मेरे गांव में जाति प्रमाण पत्र ऑनलाइन डिजिटाइज़ नहीं हुआ है तो क्या होगा?'
         : 'What if I do not possess a digitized caste certificate from revenue office?',
       a: language === 'hi'
-        ? 'वनवृद्धि में पेसा अधिनियम धारा 4(d) के तहत "सामुदायिक प्रमाणीकरण (Community Attestation Fallback)" का विशेष प्रावधान है। आप ग्राम सभा प्रस्ताव एवं आईटीडीए सत्यापन के माध्यम से आवेदन अग्रेषित कर सकते हैं।'
-        : 'Vanavriddhi features the statutory Community Attestation Fallback provision under PESA Section 4(d) and Forest Rights Act guidelines. Remote forest village applicants can submit a Gram Sabha resolution and ITDA field inquiry request directly through the portal.'
+        ? 'A.S.T.R.A में पेसा अधिनियम धारा 4(d) के तहत "सामुदायिक प्रमाणीकरण (Community Attestation Fallback)" का विशेष प्रावधान है। आप ग्राम सभा प्रस्ताव एवं आईटीडीए सत्यापन के माध्यम से आवेदन अग्रेषित कर सकते हैं।'
+        : 'A.S.T.R.A features the statutory Community Attestation Fallback provision under PESA Section 4(d) and Forest Rights Act guidelines. Remote forest village applicants can submit a Gram Sabha resolution and ITDA field inquiry request directly through the portal.'
     },
     {
       q: language === 'hi'
@@ -109,7 +109,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             <div>
               <div className="flex items-center gap-2">
                 <span className="text-base sm:text-lg font-bold text-stone-900 tracking-tight leading-none">
-                  VANAVRIDDHI (वनवृद्धि)
+                  A.S.T.R.A
                 </span>
                 <span className="text-[10px] font-mono bg-emerald-100 text-emerald-950 font-bold px-1.5 py-0.5 rounded border border-emerald-300">
                   Release v3.2
@@ -363,7 +363,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
               Clear 4-Step Process
             </span>
             <h2 className="text-2xl sm:text-3xl font-extrabold text-stone-900">
-              How Vanavriddhi Delivers Scholarships
+              How A.S.T.R.A Delivers Scholarships
             </h2>
             <p className="text-xs sm:text-sm text-stone-600">
               Designed to eliminate paperwork friction and ensure verifiable affirmative action.
@@ -490,7 +490,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                 Accessible to Every Hamlet &amp; Dialect
               </h2>
               <p className="text-xs sm:text-sm text-stone-600 leading-relaxed">
-                Language should never be a barrier to higher education. Vanavriddhi supports native bilingual workflows with voice queries and mobile alerts translated into regional languages including Hindi, English, Odia, Santali, Gondi, and regional tribal dialects.
+                Language should never be a barrier to higher education. A.S.T.R.A supports native bilingual workflows with voice queries and mobile alerts translated into regional languages including Hindi, English, Odia, Santali, Gondi, and regional tribal dialects.
               </p>
               <div className="grid grid-cols-2 gap-3 text-xs pt-2">
                 <div className="p-3 bg-stone-50 rounded-lg border border-stone-200 space-y-1">
@@ -632,7 +632,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
         <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
             <VanavriddhiLogo className="w-5 h-5 opacity-80" />
-            <span>© 2026 Vanavriddhi. Scholarship &amp; Fellowship Management for Scheduled Tribes</span>
+            <span>© 2026 A.S.T.R.A. Scholarship &amp; Fellowship Management for Scheduled Tribes</span>
           </div>
 
           <div className="flex flex-wrap items-center gap-4 text-[11px]">

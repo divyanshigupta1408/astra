@@ -124,7 +124,7 @@ export const NotFoundPage: React.FC<NotFoundPageProps> = ({
 
       {/* Footer */}
       <footer className="border-t border-stone-200 bg-white py-4 text-center text-xs text-stone-500">
-        © 2026 Vanavriddhi. Scholarship &amp; Fellowship Management for Scheduled Tribes
+        © 2026 A.S.T.R.A. Scholarship &amp; Fellowship Management for Scheduled Tribes
       </footer>
     </div>
   );

@@ -39,8 +39,8 @@ export const StudentGrievanceTab: React.FC<StudentGrievanceTabProps> = ({
     {
       sender: 'assistant',
       text: language === 'hi'
-        ? 'नमस्ते! मैं वनवृद्धि मित्र हूँ। छात्रवृत्ति पात्रता, बैंक मैपर सीडिंग अथवा पोर्टल सहायता संबंधी कोई भी प्रश्न यहाँ पूछें।'
-        : 'Namaste! I am Vanavriddhi Mitra. You can ask about scheme eligibility, NPCI bank seeding, or report grievances here.'
+        ? 'नमस्ते! मैं A.S.T.R.A मित्र हूँ। छात्रवृत्ति पात्रता, बैंक मैपर सीडिंग अथवा पोर्टल सहायता संबंधी कोई भी प्रश्न यहाँ पूछें।'
+        : 'Namaste! I am A.S.T.R.A Mitra. You can ask about scheme eligibility, NPCI bank seeding, or report grievances here.'
     }
   ]);
   const [chatInput, setChatInput] = useState<string>('');
@@ -233,7 +233,7 @@ export const StudentGrievanceTab: React.FC<StudentGrievanceTabProps> = ({
               <div className="flex items-center gap-2">
                 <Bot className="w-4 h-4 text-amber-600" />
                 <h4 className="font-bold text-stone-900 text-xs uppercase tracking-wider">
-                  Vanavriddhi Mitra (AI Scholarship Guide)
+                  A.S.T.R.A Mitra (AI Scholarship Guide)
                 </h4>
               </div>
               <span className="text-[10px] bg-amber-100 text-amber-900 font-bold px-2 py-0.5 rounded">

@@ -20,7 +20,7 @@ export const SystemDesignModal: React.FC<SystemDesignModalProps> = ({ isOpen, on
             </div>
             <div>
               <h2 className="text-base font-bold text-stone-900">
-                Vanavriddhi Layered System Architecture
+                A.S.T.R.A Layered System Architecture
               </h2>
               <p className="text-xs text-stone-500">
                 Statutory Governance & AI Safety Architecture — Ministry of Tribal Affairs
@@ -43,7 +43,7 @@ export const SystemDesignModal: React.FC<SystemDesignModalProps> = ({ isOpen, on
               Architectural Separation of Concerns: "AI assists, rules decide, humans approve."
             </span>
             <p className="text-stone-300 leading-relaxed">
-              In Vanavriddhi, generative or predictive AI models are strictly prohibited from emitting binding legal verdicts. AI operates as a sensory and advisory copilot (OCR ingestion, multi-document alignment, syndicate graph detection), whereas the legal verdict is determined by a deterministic statutory rule engine. Sanction orders require authenticated human officer sign-off.
+              In A.S.T.R.A, generative or predictive AI models are strictly prohibited from emitting binding legal verdicts. AI operates as a sensory and advisory copilot (OCR ingestion, multi-document alignment, syndicate graph detection), whereas the legal verdict is determined by a deterministic statutory rule engine. Sanction orders require authenticated human officer sign-off.
             </p>
           </div>
         </div>

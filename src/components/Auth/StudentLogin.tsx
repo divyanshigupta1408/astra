@@ -265,7 +265,7 @@ export const StudentLogin: React.FC<StudentLoginProps> = ({
       </main>
 
       <footer className="text-center py-4 text-xs text-stone-500 border-t border-stone-200 bg-white">
-        © 2026 Vanavriddhi. Direct Benefit Transfer (DBT) Mission
+        © 2026 A.S.T.R.A. Direct Benefit Transfer (DBT) Mission
       </footer>
     </div>
   );

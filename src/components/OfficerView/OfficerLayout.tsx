@@ -31,6 +31,8 @@ interface OfficerLayoutProps {
   language: AppLanguage;
   onLanguageChange: (lang: AppLanguage) => void;
   onLogout: () => void;
+  onOpenCommandPalette?: () => void;
+  onReplayTour?: () => void;
   children: React.ReactNode;
 }
 
@@ -41,6 +43,8 @@ export const OfficerLayout: React.FC<OfficerLayoutProps> = ({
   language,
   onLanguageChange,
   onLogout,
+  onOpenCommandPalette,
+  onReplayTour,
   children
 }) => {
   const isInstituteNodal = user.officerSubRole === 'institute';
@@ -70,7 +74,7 @@ export const OfficerLayout: React.FC<OfficerLayoutProps> = ({
             <div>
               <div className="flex items-center gap-2">
                 <span className="text-sm font-bold text-stone-900 tracking-tight">
-                  VANAVRIDDHI (वनवृद्धि)
+                  A.S.T.R.A
                 </span>
                 <span className="text-[10px] font-bold bg-emerald-100 text-emerald-900 px-2 py-0.5 rounded border border-emerald-300">
                   {isInstituteNodal ? 'Institute Nodal Desk' : 'State Welfare Desk'}
@@ -101,6 +105,8 @@ export const OfficerLayout: React.FC<OfficerLayoutProps> = ({
         onLogout={onLogout}
         onNavigateHome={() => onTabChange('overview')}
         accentColor="emerald"
+        onOpenCommandPalette={onOpenCommandPalette}
+        onReplayTour={onReplayTour}
       />
 
       {/* Main Body with Dense, Table-Driven Desktop Sidebar + Content */}

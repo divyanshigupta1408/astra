@@ -12,19 +12,22 @@ import {
   BarChart3,
   ExternalLink,
   Lock,
-  Layers
+  Layers,
+  RotateCcw
 } from 'lucide-react';
 
 interface UserProfileMenuProps {
   user: AuthUser;
   onLogout: () => void;
   onOpenAccessPanel?: () => void;
+  onReplayTour?: () => void;
 }
 
 export const UserProfileMenu: React.FC<UserProfileMenuProps> = ({
   user,
   onLogout,
-  onOpenAccessPanel
+  onOpenAccessPanel,
+  onReplayTour
 }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -154,6 +157,23 @@ export const UserProfileMenu: React.FC<UserProfileMenuProps> = ({
 
           {/* Action List */}
           <div className="border-t border-stone-200 bg-stone-50/50 p-2 space-y-1">
+            {onReplayTour && (
+              <button
+                type="button"
+                onClick={() => {
+                  setIsOpen(false);
+                  onReplayTour();
+                }}
+                className="w-full flex items-center justify-between px-3 py-2 rounded-lg text-stone-700 hover:bg-stone-100 transition-colors text-xs cursor-pointer font-medium"
+              >
+                <div className="flex items-center gap-2">
+                  <RotateCcw className="w-3.5 h-3.5 text-amber-600" />
+                  <span>Replay Onboarding Tour</span>
+                </div>
+                <span className="text-[10px] text-stone-500">Walkthrough →</span>
+              </button>
+            )}
+
             {onOpenAccessPanel && (
               <button
                 type="button"

@@ -26,6 +26,8 @@ interface MinistryLayoutProps {
   language: AppLanguage;
   onLanguageChange: (lang: AppLanguage) => void;
   onLogout: () => void;
+  onOpenCommandPalette?: () => void;
+  onReplayTour?: () => void;
   children: React.ReactNode;
 }
 
@@ -36,6 +38,8 @@ export const MinistryLayout: React.FC<MinistryLayoutProps> = ({
   language,
   onLanguageChange,
   onLogout,
+  onOpenCommandPalette,
+  onReplayTour,
   children
 }) => {
   const navItems: { id: MinistryNavTab; label: string; icon: React.ElementType }[] = [
@@ -61,7 +65,7 @@ export const MinistryLayout: React.FC<MinistryLayoutProps> = ({
             <div>
               <div className="flex items-center gap-2">
                 <span className="text-sm font-bold text-stone-900 tracking-tight">
-                  VANAVRIDDHI (वनवृद्धि)
+                  A.S.T.R.A
                 </span>
                 <span className="text-[10px] font-bold bg-indigo-100 text-indigo-950 px-2 py-0.5 rounded border border-indigo-300">
                   Ministry HQ Command
@@ -90,6 +94,8 @@ export const MinistryLayout: React.FC<MinistryLayoutProps> = ({
         onLogout={onLogout}
         onNavigateHome={() => onTabChange('overview')}
         accentColor="indigo"
+        onOpenCommandPalette={onOpenCommandPalette}
+        onReplayTour={onReplayTour}
       />
 
       {/* Main Body with Desktop Sidebar + Content */}

@@ -1,6 +1,6 @@
 {
-  "name": "Vanavriddhi - ST Scholarship & Fellowship System",
-  "description": "AI-Enabled Scholarship and Fellowship Management System for Scheduled Tribe students. Transparent rule execution, verification, and Direct Benefit Transfer.",
+  "name": "A.S.T.R.A - ST Scholarship & Fellowship System",
+  "description": "A.S.T.R.A: AI-Enabled Scholarship and Fellowship Management System for Scheduled Tribe students. Transparent rule execution, verification, and Direct Benefit Transfer.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

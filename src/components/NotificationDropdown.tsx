@@ -1,13 +1,16 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { Bell, Check, CheckCheck, Clock, ExternalLink, ShieldCheck, AlertCircle, FileText, CheckCircle2 } from 'lucide-react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
+import { Bell, Check, CheckCheck, Clock, ExternalLink, ShieldCheck, AlertCircle, FileText, CheckCircle2, Filter, Search } from 'lucide-react';
 import { AuthUser } from '../types';
 
-interface NotificationItem {
+export type NotificationCategory = 'all' | 'status' | 'action' | 'alert';
+
+export interface NotificationItem {
   id: string;
   title: string;
   message: string;
   timestamp: string;
   isRead: boolean;
+  category: NotificationCategory;
   type: 'success' | 'alert' | 'info';
   actionLabel?: string;
 }
@@ -19,6 +22,8 @@ interface NotificationDropdownProps {
 export const NotificationDropdown: React.FC<NotificationDropdownProps> = ({ user }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const [activeCategory, setActiveCategory] = useState<NotificationCategory>('all');
+  const [readFilter, setReadFilter] = useState<'all' | 'unread'>('all');
 
   // Generate realistic notifications based on user role
   const getInitialNotifications = (): NotificationItem[] => {
@@ -30,6 +35,7 @@ export const NotificationDropdown: React.FC<NotificationDropdownProps> = ({ user
           message: 'Direct Benefit Transfer link confirmed with State Bank of India account ending in 8821.',
           timestamp: '12m ago',
           isRead: false,
+          category: 'status',
           type: 'success',
           actionLabel: 'Check Status'
         },
@@ -39,6 +45,7 @@ export const NotificationDropdown: React.FC<NotificationDropdownProps> = ({ user
           message: 'Your Top Class ST application VV-2026-CG-088219 has passed OCR validation and is queued for officer sign-off.',
           timestamp: '2h ago',
           isRead: false,
+          category: 'status',
           type: 'info'
         },
         {
@@ -47,6 +54,16 @@ export const NotificationDropdown: React.FC<NotificationDropdownProps> = ({ user
           message: 'Annual renewal window is open. Please submit semester-3 attendance certification before 30 October 2026.',
           timestamp: 'Yesterday',
           isRead: true,
+          category: 'action',
+          type: 'info'
+        },
+        {
+          id: 'notif-s4',
+          title: 'Mobile Saturation Camp in Dantewada',
+          message: 'CSC & ITDA saturation van will be stationed at Block Office on 12-14 October for free eKYC assistance.',
+          timestamp: '2d ago',
+          isRead: true,
+          category: 'alert',
           type: 'info'
         }
       ];
@@ -63,6 +80,7 @@ export const NotificationDropdown: React.FC<NotificationDropdownProps> = ({ user
             : '14 district verification files cleared by Institute Nodal Officers in Odisha state.',
           timestamp: '4m ago',
           isRead: false,
+          category: 'action',
           type: 'success',
           actionLabel: 'Review Batch'
         },
@@ -72,6 +90,7 @@ export const NotificationDropdown: React.FC<NotificationDropdownProps> = ({ user
           message: '2 applications in Amber Lane have reached 36 hours of the 48-hour institutional scrutiny window.',
           timestamp: '28m ago',
           isRead: false,
+          category: 'alert',
           type: 'alert',
           actionLabel: 'View Queue'
         },
@@ -81,6 +100,16 @@ export const NotificationDropdown: React.FC<NotificationDropdownProps> = ({ user
           message: 'Disbursal file #PFMS-2026-081 acknowledged by PFMS gateway. ₹18,40,000 released for 12 scholars.',
           timestamp: '3h ago',
           isRead: true,
+          category: 'status',
+          type: 'info'
+        },
+        {
+          id: 'notif-o4',
+          title: 'New Case Note from Campus ST Cell',
+          message: 'Prof. Tirkey added verification note to file VV-2026-OD-091823 regarding physical admission proof.',
+          timestamp: 'Yesterday',
+          isRead: true,
+          category: 'status',
           type: 'info'
         }
       ];
@@ -94,23 +123,35 @@ export const NotificationDropdown: React.FC<NotificationDropdownProps> = ({ user
         message: 'Special VLE enrollment & DBT bank-seeding drive for Dantewada, Chhattisgarh sanctioned for 12–14 Oct.',
         timestamp: '18m ago',
         isRead: false,
+        category: 'action',
         type: 'success',
         actionLabel: 'View Schedule'
       },
       {
         id: 'notif-m2',
-        title: 'Quarterly UC Audit Dispatched',
-        message: 'Formal notices issued to 3 autonomous institutes regarding delayed Utilization Certificates.',
-        timestamp: '2h ago',
+        title: 'Alert Rule Breached: NPCI Seeding Gap',
+        message: 'Aadhaar NPCI seeding failure rate is at 28.0%, exceeding your statutory alert threshold of 20.0%.',
+        timestamp: '45m ago',
         isRead: false,
+        category: 'alert',
         type: 'alert'
       },
       {
         id: 'notif-m3',
+        title: 'Quarterly UC Audit Dispatched',
+        message: 'Formal notices issued to 3 autonomous institutes regarding delayed Utilization Certificates.',
+        timestamp: '2h ago',
+        isRead: false,
+        category: 'status',
+        type: 'info'
+      },
+      {
+        id: 'notif-m4',
         title: 'National DBT Telemetry Sync',
         message: '99.4% direct credit success rate achieved across 28 States & UTs. Zero PII exposure logged.',
         timestamp: 'Today, 08:30 IST',
         isRead: true,
+        category: 'status',
         type: 'info'
       }
     ];
@@ -139,96 +180,173 @@ export const NotificationDropdown: React.FC<NotificationDropdownProps> = ({ user
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  // Filtered notifications by category and read/unread
+  const filteredNotifications = useMemo(() => {
+    return notifications.filter(n => {
+      if (readFilter === 'unread' && n.isRead) return false;
+      if (activeCategory !== 'all' && n.category !== activeCategory) return false;
+      return true;
+    });
+  }, [notifications, activeCategory, readFilter]);
+
   return (
     <div className="relative" ref={dropdownRef}>
+      {/* Bell Button with Badge */}
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="relative p-2 rounded-lg text-stone-600 hover:text-stone-900 hover:bg-stone-100 transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-stone-400"
-        aria-label={`Notifications: ${unreadCount} unread`}
-        title="Portal Notifications"
+        className="relative p-1.5 rounded-lg border border-stone-200 hover:border-stone-300 bg-white hover:bg-stone-50 transition-colors text-stone-600 hover:text-stone-900 cursor-pointer focus:outline-hidden focus:ring-2 focus:ring-stone-400"
+        aria-label="View notifications"
+        aria-expanded={isOpen}
       >
         <Bell className="w-4 h-4" />
         {unreadCount > 0 && (
-          <span className="absolute top-1 right-1 flex h-4 w-4 items-center justify-center rounded-full bg-amber-500 text-[9px] font-bold text-stone-950 font-mono ring-2 ring-white">
+          <span className="absolute -top-1 -right-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-rose-600 px-1 text-[9px] font-extrabold text-white animate-pulse">
             {unreadCount}
           </span>
         )}
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-80 sm:w-96 rounded-2xl bg-white shadow-2xl ring-1 ring-black/10 z-50 overflow-hidden animate-in fade-in slide-in-from-top-2">
+        <div className="absolute right-0 mt-2 w-80 sm:w-96 rounded-2xl bg-white shadow-2xl ring-1 ring-black/10 z-50 overflow-hidden animate-in fade-in slide-in-from-top-2 text-xs">
           {/* Header */}
-          <div className="flex items-center justify-between border-b border-stone-200 px-4 py-3 bg-stone-50">
-            <div className="flex items-center gap-2">
-              <span className="text-xs font-bold text-stone-900">Notifications</span>
+          <div className="p-3.5 bg-stone-50 border-b border-stone-200 space-y-2">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <span className="font-bold text-stone-900 text-sm">Notifications</span>
+                {unreadCount > 0 ? (
+                  <span className="px-1.5 py-0.5 rounded-full bg-rose-100 text-rose-900 text-[10px] font-bold">
+                    {unreadCount} new
+                  </span>
+                ) : (
+                  <span className="px-1.5 py-0.5 rounded-full bg-stone-200 text-stone-600 text-[10px]">
+                    All caught up
+                  </span>
+                )}
+              </div>
+
               {unreadCount > 0 && (
-                <span className="rounded-full bg-amber-100 border border-amber-300 px-2 py-0.5 text-[10px] font-mono font-bold text-amber-900">
-                  {unreadCount} new
-                </span>
+                <button
+                  type="button"
+                  onClick={markAllAsRead}
+                  className="text-[11px] font-semibold text-emerald-800 hover:text-emerald-950 flex items-center gap-1 cursor-pointer"
+                >
+                  <CheckCheck className="w-3.5 h-3.5" />
+                  <span>Mark all read</span>
+                </button>
               )}
             </div>
-            {unreadCount > 0 && (
+
+            {/* Category Tabs & Read/Unread Filter */}
+            <div className="flex items-center justify-between pt-1 gap-2">
+              <div className="flex rounded-lg border border-stone-200 bg-white p-0.5 text-[10px] font-semibold">
+                <button
+                  type="button"
+                  onClick={() => setActiveCategory('all')}
+                  className={`px-2 py-0.5 rounded transition-colors ${activeCategory === 'all' ? 'bg-stone-900 text-white' : 'text-stone-600'}`}
+                >
+                  All
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setActiveCategory('status')}
+                  className={`px-2 py-0.5 rounded transition-colors ${activeCategory === 'status' ? 'bg-stone-900 text-white' : 'text-stone-600'}`}
+                >
+                  Status
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setActiveCategory('action')}
+                  className={`px-2 py-0.5 rounded transition-colors ${activeCategory === 'action' ? 'bg-stone-900 text-white' : 'text-stone-600'}`}
+                >
+                  Action
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setActiveCategory('alert')}
+                  className={`px-2 py-0.5 rounded transition-colors ${activeCategory === 'alert' ? 'bg-stone-900 text-white' : 'text-stone-600'}`}
+                >
+                  Alerts
+                </button>
+              </div>
+
+              {/* Unread Toggle */}
               <button
                 type="button"
-                onClick={markAllAsRead}
-                className="text-[11px] font-medium text-emerald-800 hover:text-emerald-950 hover:underline flex items-center gap-1 cursor-pointer"
+                onClick={() => setReadFilter(readFilter === 'all' ? 'unread' : 'all')}
+                className={`px-2 py-1 rounded text-[10px] font-bold border transition-colors ${
+                  readFilter === 'unread'
+                    ? 'bg-rose-50 text-rose-900 border-rose-300'
+                    : 'bg-white text-stone-600 border-stone-200 hover:bg-stone-100'
+                }`}
               >
-                <CheckCheck className="w-3 h-3" />
-                <span>Mark all read</span>
+                {readFilter === 'unread' ? 'Unread Only' : 'Show All'}
               </button>
-            )}
+            </div>
           </div>
 
-          {/* List */}
-          <div className="max-h-84 overflow-y-auto divide-y divide-stone-100">
-            {notifications.length === 0 ? (
-              <div className="p-6 text-center text-xs text-stone-500">
-                No recent notifications
+          {/* Notifications List */}
+          <div className="max-h-80 overflow-y-auto divide-y divide-stone-100">
+            {filteredNotifications.length === 0 ? (
+              <div className="p-8 text-center text-stone-400 space-y-1">
+                <Bell className="w-7 h-7 text-stone-300 mx-auto" />
+                <p className="font-semibold text-stone-600">No notifications in this filter</p>
+                <p className="text-[11px] text-stone-400">All updates within your role scope are cleared.</p>
               </div>
             ) : (
-              notifications.map((notif) => {
-                let icon = <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />;
-                if (notif.type === 'alert') {
-                  icon = <AlertCircle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />;
-                } else if (notif.type === 'info') {
-                  icon = <Clock className="w-4 h-4 text-sky-600 shrink-0 mt-0.5" />;
-                }
-
-                return (
-                  <div
-                    key={notif.id}
-                    onClick={() => markAsRead(notif.id)}
-                    className={`p-3.5 flex items-start gap-3 transition-colors cursor-pointer text-xs ${
-                      notif.isRead ? 'bg-white hover:bg-stone-50/70' : 'bg-amber-50/40 hover:bg-amber-50/80 font-medium'
-                    }`}
-                  >
-                    {icon}
-                    <div className="flex-1 min-w-0 space-y-1">
-                      <div className="flex items-center justify-between gap-2">
-                        <span className={`text-xs ${notif.isRead ? 'text-stone-800' : 'text-stone-950 font-bold'}`}>
-                          {notif.title}
-                        </span>
-                        <span className="text-[10px] font-mono text-stone-500 shrink-0">
-                          {notif.timestamp}
-                        </span>
-                      </div>
-                      <p className="text-[11px] text-stone-600 leading-relaxed">
-                        {notif.message}
-                      </p>
-                    </div>
-                    {!notif.isRead && (
-                      <span className="w-1.5 h-1.5 rounded-full bg-amber-500 shrink-0 mt-2" />
+              filteredNotifications.map((notif) => (
+                <div
+                  key={notif.id}
+                  onClick={() => markAsRead(notif.id)}
+                  className={`p-3.5 transition-colors cursor-pointer flex items-start gap-3 ${
+                    notif.isRead ? 'bg-white hover:bg-stone-50' : 'bg-emerald-50/50 hover:bg-emerald-50/80'
+                  }`}
+                >
+                  {/* Category icon */}
+                  <div className="mt-0.5 shrink-0">
+                    {notif.type === 'success' ? (
+                      <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+                    ) : notif.type === 'alert' ? (
+                      <AlertCircle className="w-4 h-4 text-rose-600" />
+                    ) : (
+                      <Clock className="w-4 h-4 text-amber-600" />
                     )}
                   </div>
-                );
-              })
+
+                  <div className="min-w-0 flex-1 space-y-1">
+                    <div className="flex items-center justify-between gap-1">
+                      <span className={`text-xs font-bold leading-none ${notif.isRead ? 'text-stone-800' : 'text-stone-950 font-extrabold'}`}>
+                        {notif.title}
+                      </span>
+                      <span className="text-[10px] text-stone-400 font-mono shrink-0">
+                        {notif.timestamp}
+                      </span>
+                    </div>
+
+                    <p className="text-[11px] text-stone-600 leading-relaxed">
+                      {notif.message}
+                    </p>
+
+                    <div className="flex items-center justify-between pt-0.5">
+                      <span className="text-[9px] uppercase font-bold tracking-wider text-stone-400 bg-stone-100 px-1 rounded">
+                        {notif.category}
+                      </span>
+
+                      {!notif.isRead && (
+                        <span className="text-[10px] text-emerald-800 font-bold hover:underline">
+                          Mark read
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))
             )}
           </div>
 
           {/* Footer */}
-          <div className="border-t border-stone-200 bg-stone-50 px-4 py-2 text-center text-[10px] text-stone-500">
-            Real-time Direct Benefit Transfer &amp; GFR 2017 Audit Telemetry
+          <div className="p-2.5 bg-stone-50 border-t border-stone-200 text-center text-[10px] text-stone-500">
+            Real-time Direct Benefit Transfer &amp; Verification Alerts
           </div>
         </div>
       )}

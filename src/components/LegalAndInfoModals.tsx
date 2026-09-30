@@ -32,7 +32,7 @@ export const LegalAndInfoModal: React.FC<InfoModalProps> = ({ modalType, onClose
               {modalType === 'privacy' && 'Privacy Policy & Data Protection (DPDP 2023)'}
               {modalType === 'terms' && 'Terms of Use & Statutory Guidelines'}
               {modalType === 'accessibility' && 'Accessibility Statement (WCAG 2.1 AA)'}
-              {modalType === 'help' && 'Vanavriddhi Help Centre & Support'}
+              {modalType === 'help' && 'A.S.T.R.A Help Centre & Support'}
               {modalType === 'contact' && 'Contact & Administrative Directory'}
               {modalType === 'aboutDecisions' && 'How Decisions Are Made: Core Product Principle'}
             </h3>
@@ -51,7 +51,7 @@ export const LegalAndInfoModal: React.FC<InfoModalProps> = ({ modalType, onClose
           {modalType === 'privacy' && (
             <>
               <p className="font-semibold text-stone-900">
-                Vanavriddhi complies strictly with the Digital Personal Data Protection (DPDP) Act, 2023 and General Financial Rules (GFR).
+                A.S.T.R.A complies strictly with the Digital Personal Data Protection (DPDP) Act, 2023 and General Financial Rules (GFR).
               </p>
               <div className="space-y-2">
                 <h4 className="font-bold text-stone-900">1. Data Minimization &amp; Purpose Limitation</h4>
@@ -73,7 +73,7 @@ export const LegalAndInfoModal: React.FC<InfoModalProps> = ({ modalType, onClose
           {modalType === 'terms' && (
             <>
               <p className="font-semibold text-stone-900">
-                Terms governing access to the Vanavriddhi Scholarship &amp; Fellowship Management Platform.
+                Terms governing access to the A.S.T.R.A Scholarship &amp; Fellowship Management Platform.
               </p>
               <div className="space-y-2">
                 <h4 className="font-bold text-stone-900">1. Eligibility &amp; Accurate Representation</h4>
@@ -100,7 +100,7 @@ export const LegalAndInfoModal: React.FC<InfoModalProps> = ({ modalType, onClose
               <div className="space-y-2">
                 <h4 className="font-bold text-stone-900">1. Standards Compliance</h4>
                 <p>
-                  Vanavriddhi aims to meet Level AA of the Web Content Accessibility Guidelines (WCAG 2.1). Visual contrast ratios exceed 4.5:1 for all critical text elements, form controls, and status indicators.
+                  A.S.T.R.A aims to meet Level AA of the Web Content Accessibility Guidelines (WCAG 2.1). Visual contrast ratios exceed 4.5:1 for all critical text elements, form controls, and status indicators.
                 </p>
                 <h4 className="font-bold text-stone-900">2. Keyboard Navigation &amp; Screen Readers</h4>
                 <p>
@@ -140,13 +140,13 @@ export const LegalAndInfoModal: React.FC<InfoModalProps> = ({ modalType, onClose
           {modalType === 'contact' && (
             <>
               <p className="font-semibold text-stone-900">
-                Administrative directory for Vanavriddhi operations and scholarship grievance escalations.
+                Administrative directory for A.S.T.R.A operations and scholarship grievance escalations.
               </p>
               <div className="space-y-3">
                 <div className="p-3 bg-stone-50 rounded-lg border border-stone-200 space-y-1">
                   <div className="font-bold text-stone-900">Scholarship &amp; Fellowship Directorate</div>
                   <div>Ministry of Tribal Affairs, Shastri Bhawan, Dr. Rajendra Prasad Road, New Delhi – 110001</div>
-                  <div className="pt-1 text-emerald-800 font-mono">Email: helpdesk@vanavriddhi.gov.in</div>
+                  <div className="pt-1 text-emerald-800 font-mono">Email: helpdesk@astra.gov.in</div>
                 </div>
                 <div className="p-3 bg-stone-50 rounded-lg border border-stone-200 space-y-1">
                   <div className="font-bold text-stone-900">Public Financial Management System (PFMS) Cell</div>
@@ -163,7 +163,7 @@ export const LegalAndInfoModal: React.FC<InfoModalProps> = ({ modalType, onClose
                 "AI assists, rules decide, humans approve."
               </div>
               <p className="font-semibold text-stone-900">
-                The three fundamental pillars governing every action in Vanavriddhi:
+                The three fundamental pillars governing every action in A.S.T.R.A:
               </p>
               <div className="space-y-2">
                 <h4 className="font-bold text-stone-900">1. AI Assists (Advisory Intelligence)</h4>
@@ -185,7 +185,7 @@ export const LegalAndInfoModal: React.FC<InfoModalProps> = ({ modalType, onClose
 
         {/* Footer */}
         <div className="border-t border-stone-200 pt-3 flex items-center justify-between">
-          <span className="text-[11px] text-stone-500 font-mono">Vanavriddhi Portal • Version 3.2</span>
+          <span className="text-[11px] text-stone-500 font-mono">A.S.T.R.A Portal • Version 3.2</span>
           <button
             onClick={onClose}
             className="px-4 py-1.5 rounded-lg bg-stone-800 hover:bg-stone-900 text-white font-bold text-xs cursor-pointer"

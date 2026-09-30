@@ -257,7 +257,7 @@ export const OfficerLogin: React.FC<OfficerLoginProps> = ({
       </main>
 
       <footer className="text-center py-4 text-xs text-stone-500 border-t border-stone-200 bg-white">
-        © 2026 Vanavriddhi. Statutory Verification Directorate
+        © 2026 A.S.T.R.A. Statutory Verification Directorate
       </footer>
     </div>
   );

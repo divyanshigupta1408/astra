@@ -236,3 +236,64 @@ export interface AuditLogEntry {
   hash: string;
   previousHash: string;
 }
+
+export interface CaseNote {
+  id: string;
+  applicationId: string;
+  authorName: string;
+  authorRole: string;
+  timestamp: string;
+  content: string;
+}
+
+export interface OfficerSavedFilter {
+  id: string;
+  name: string;
+  laneFilter: string;
+  slaFilter: string;
+  sortOldestFirst: boolean;
+  isPinned: boolean;
+}
+
+export interface ScheduledReport {
+  id: string;
+  title: string;
+  reportType: 'disbursal_summary' | 'pvtg_saturation' | 'institution_compliance' | 'fraud_digest';
+  frequency: 'Daily' | 'Weekly' | 'Monthly' | 'Cycle End';
+  recipients: string[];
+  nextRun: string;
+  active: boolean;
+}
+
+export interface MinistryAlertRule {
+  id: string;
+  metricKey: string;
+  metricTitle: string;
+  condition: 'gt' | 'lt';
+  thresholdValue: number;
+  unit: string;
+  currentActual: number;
+  isTriggered: boolean;
+}
+
+export interface CscBooking {
+  id: string;
+  district: string;
+  block: string;
+  centreName: string;
+  date: string;
+  slot: string;
+  serviceType: string;
+  studentName: string;
+  studentPhone: string;
+  confirmedAt: string;
+}
+
+export interface StudentDraftState {
+  currentStep: number;
+  totalSteps: number;
+  stepName: string;
+  completionPercentage: number;
+  lastSavedAt: string;
+  schemeId: string;
+}

@@ -110,7 +110,7 @@ export interface TranslationDict {
 
 export const translations: Record<'en' | 'hi', TranslationDict> = {
   en: {
-    appTitle: 'Vanavriddhi',
+    appTitle: 'A.S.T.R.A',
     appSubtitle: 'AI-Enabled ST Scholarship & Fellowship Management System',
     ministryName: 'Ministry of Tribal Affairs • Government of India',
     corePrinciple: 'AI assists, rules decide, humans approve.',
@@ -219,7 +219,7 @@ export const translations: Record<'en' | 'hi', TranslationDict> = {
     }
   },
   hi: {
-    appTitle: 'वनवृद्धि (Vanavriddhi)',
+    appTitle: 'ए.एस.टी.आर.ए (A.S.T.R.A)',
     appSubtitle: 'अनुसूचित जनजाति (एसटी) छात्रवृत्ति एवं फैलोशिप प्रबंधन प्रणाली',
     ministryName: 'जनजातीय कार्य मंत्रालय • भारत सरकार',
     corePrinciple: 'एआई सहायता करता है, नियम निर्णय लेते हैं, मानव स्वीकृति देते हैं।',

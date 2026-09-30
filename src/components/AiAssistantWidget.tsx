@@ -20,8 +20,8 @@ export const AiAssistantWidget: React.FC<AiAssistantWidgetProps> = ({ language }
   const [isListening, setIsListening] = useState<boolean>(false);
 
   const initialWelcome = language === 'hi'
-    ? 'नमस्ते! मैं वनवृद्धि मित्र हूँ, जनजातीय कार्य मंत्रालय (MoTA) का सहायक। मैं एसटी छात्रवृत्ति एवं फैलोशिप दिशानिर्देशों पर जानकारी देता हूँ। मैं आपकी क्या सहायता कर सकता हूँ?'
-    : 'Namaste! I am Vanavriddhi Mitra, an advisory assistant for MoTA Scheduled Tribe scholarships and fellowships. I cite statutory guideline clauses to assist you. How may I help you today?';
+    ? 'नमस्ते! मैं A.S.T.R.A मित्र हूँ, जनजातीय कार्य मंत्रालय (MoTA) का सहायक। मैं एसटी छात्रवृत्ति एवं फैलोशिप दिशानिर्देशों पर जानकारी देता हूँ। मैं आपकी क्या सहायता कर सकता हूँ?'
+    : 'Namaste! I am A.S.T.R.A Mitra, an advisory assistant for MoTA Scheduled Tribe scholarships and fellowships. I cite statutory guideline clauses to assist you. How may I help you today?';
 
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
@@ -130,11 +130,11 @@ export const AiAssistantWidget: React.FC<AiAssistantWidgetProps> = ({ language }
         <button
           onClick={() => setIsOpen(true)}
           className="fixed bottom-5 right-5 z-40 bg-emerald-900 hover:bg-emerald-950 text-white p-3.5 rounded-full shadow-xl transition-transform hover:scale-105 flex items-center gap-2 border-2 border-amber-400 group"
-          title="Open Vanavriddhi AI Mitra"
+          title="Open A.S.T.R.A AI Mitra"
         >
           <Bot className="w-5 h-5 text-amber-300" />
           <span className="text-xs font-bold hidden sm:inline pr-1">
-            Vanavriddhi Mitra
+            A.S.T.R.A Mitra
           </span>
         </button>
       )}
@@ -150,7 +150,7 @@ export const AiAssistantWidget: React.FC<AiAssistantWidgetProps> = ({ language }
               </div>
               <div>
                 <h4 className="text-xs font-bold text-white flex items-center gap-1.5">
-                  <span>Vanavriddhi Mitra</span>
+                  <span>A.S.T.R.A Mitra</span>
                   <span className="text-[9px] bg-emerald-800 text-emerald-200 px-1.5 py-0.2 rounded font-mono">
                     Statutory Guardrails
                   </span>

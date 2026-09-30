@@ -1,8 +1,7 @@
-import { GoogleGenAI } from '@google/genai';
 import { SCHEMES_DATABASE } from '../data/schemes';
 
 const SYSTEM_INSTRUCTION = `
-You are "Vanavriddhi Mitra", an AI-powered advisory assistant for the Ministry of Tribal Affairs (Government of India).
+You are "A.S.T.R.A Mitra", an AI-powered advisory assistant for the Ministry of Tribal Affairs (Government of India).
 Your sole purpose is to provide clear, helpful information about Government Scholarships and Fellowships for Scheduled Tribe (ST) students.
 
 STRICT GUARDRAILS & OPERATIONAL BOUNDARIES:
@@ -53,36 +52,23 @@ OFFICIAL SCHEMES KNOWLEDGE SNIPPETS:
 `;
 
 export async function askAiAssistant(question: string, language: 'en' | 'hi' = 'en'): Promise<string> {
-  const apiKey = (typeof process !== 'undefined' && process.env?.GEMINI_API_KEY) ||
-                 (typeof import.meta !== 'undefined' && import.meta.env?.VITE_GEMINI_API_KEY) ||
-                 '';
+  try {
+    const res = await fetch('/api/ai-assistant', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ question, language }),
+    });
 
-  if (apiKey && apiKey !== 'MY_GEMINI_API_KEY') {
-    try {
-      const ai = new GoogleGenAI({ apiKey });
-      const prompt = `
-Language: ${language === 'hi' ? 'Hindi' : 'English'}
-System Context:
-${SYSTEM_INSTRUCTION}
-
-Knowledge Base:
-${KNOWLEDGE_BASE_CONTEXT}
-
-User Query: "${question}"
-
-Please provide an accurate, helpful response adhering strictly to the guardrails, citing guideline clauses, and reminding them that final eligibility comes from the deterministic rule engine.`;
-
-      const response = await ai.models.generateContent({
-        model: 'gemini-2.5-flash',
-        contents: prompt
-      });
-
-      if (response && response.text) {
-        return response.text.trim();
+    if (res.ok) {
+      const data = await res.json();
+      if (data?.text) {
+        return data.text.trim();
       }
-    } catch (err) {
-      console.warn('Gemini API call failed, switching to deterministic knowledge engine fallback:', err);
     }
+  } catch (err) {
+    console.warn('Backend assistant request failed, switching to deterministic knowledge engine fallback:', err);
   }
 
   // Deterministic Grounded Knowledge Base Fallback
@@ -102,8 +88,8 @@ function generateDeterministicKnowledgeResponse(question: string, language: 'en'
     q.includes('who are you')
   ) {
     return language === 'hi'
-      ? 'मैं वनवृद्धि सहायक हूँ। मैं केवल जनजातीय कार्य मंत्रालय (MoTA) की एसटी छात्रवृत्ति व फैलोशिप योजनाओं पर जानकारी प्रदान करता हूँ। अन्य विषयों के लिए कृपया अपने नोडल अधिकारी से संपर्क करें।'
-      : 'I am the Vanavriddhi Assistant. I only answer inquiries related to Ministry of Tribal Affairs (MoTA) scholarships and fellowships for Scheduled Tribe (ST) students. For other matters, please contact your nodal officer.';
+      ? 'मैं A.S.T.R.A सहायक हूँ। मैं केवल जनजातीय कार्य मंत्रालय (MoTA) की एसटी छात्रवृत्ति व फैलोशिप योजनाओं पर जानकारी प्रदान करता हूँ। अन्य विषयों के लिए कृपया अपने नोडल अधिकारी से संपर्क करें।'
+      : 'I am the A.S.T.R.A Assistant. I only answer inquiries related to Ministry of Tribal Affairs (MoTA) scholarships and fellowships for Scheduled Tribe (ST) students. For other matters, please contact your nodal officer.';
   }
 
   // Eligibility declaration guardrail
